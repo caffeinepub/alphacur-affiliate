@@ -1,4 +1,16 @@
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap");
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/assets/fonts/PlusJakartaSans.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Playfair Display";
+  src: url("/assets/fonts/PlayfairDisplay.woff2") format("woff2");
+  font-weight: 400 800;
+  font-display: swap;
+}
 
 @tailwind base;
 @tailwind components;
@@ -6,38 +18,33 @@
 
 @layer base {
   :root {
-    --background: 100% 0 0;
-    --foreground: 13% 0 0;
-    --card: 100% 0 0;
-    --card-foreground: 13% 0 0;
-    --popover: 100% 0 0;
-    --popover-foreground: 13% 0 0;
-    --primary: 55% 0.13 150;
-    --primary-foreground: 100% 0 0;
-    --secondary: 96% 0.01 150;
-    --secondary-foreground: 55% 0.13 150;
-    --muted: 96% 0.005 255;
-    --muted-foreground: 55% 0.01 255;
-    --accent: 96% 0.01 150;
-    --accent-foreground: 55% 0.13 150;
-    --destructive: 50% 0.2 25;
-    --destructive-foreground: 100% 0 0;
-    --border: 92% 0.005 255;
-    --input: 92% 0.005 255;
-    --ring: 55% 0.13 150;
-    --radius: 0.5rem;
+    --background: 1 0 0;
+    --foreground: 0.18 0.02 240;
+    --card: 0.98 0.005 240;
+    --card-foreground: 0.18 0.02 240;
+    --popover: 1 0 0;
+    --popover-foreground: 0.18 0.02 240;
+    --primary: 0.42 0.18 255;
+    --primary-foreground: 1 0 0;
+    --secondary: 0.52 0.16 155;
+    --secondary-foreground: 1 0 0;
+    --muted: 0.96 0.008 240;
+    --muted-foreground: 0.48 0.02 240;
+    --accent: 0.94 0.04 155;
+    --accent-foreground: 0.18 0.08 155;
+    --destructive: 0.45 0.22 25;
+    --destructive-foreground: 1 0 0;
+    --border: 0.9 0.01 240;
+    --input: 0.9 0.01 240;
+    --ring: 0.42 0.18 255;
+    --radius: 0.625rem;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
+
   body {
-    @apply bg-background text-foreground;
-    font-family: "Plus Jakarta Sans", sans-serif;
-  }
-  html {
-    scroll-behavior: smooth;
+    @apply bg-background text-foreground font-body;
   }
 }

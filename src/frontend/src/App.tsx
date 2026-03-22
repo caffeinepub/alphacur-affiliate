@@ -1,766 +1,667 @@
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Check, ChevronDown, Menu, Star, X } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  BarChart3,
+  CheckCircle2,
+  ChevronRight,
+  CreditCard,
+  Lock,
+  Shield,
+  Star,
+  TrendingUp,
+} from "lucide-react";
+import { motion } from "motion/react";
 
 const AFFILIATE_URL =
-  "https://www.nutrisystem.com/diet-plans/nutrisystem-program";
+  "https://www.creditbuilderiq.com/lander/aff-4?offercode=4375029E&plancode=PLANCB4D&transactionid=4bcf4e6a15904846971feafae6ae6788&offer_id=874&aff_id=1331&aff_sub=%7Baffiliate%2Fpublisher_id_here%7D&fname=&lname=&email=&address=&city=&state=&zip=&phone=&source=%7Btraffic_type_here%7D&aff_sub2=%7Badditional_subID_here%7D&aff_sub3=%7Badditional_subID_here%7D&aff_click_id=%7BclickID_here%7D&utm_campaign=%7Baffiliate%2Fpublisher_id_here%7D&utm_source=1331&utm_medium=affiliate";
 
-function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
+const features = [
+  {
+    icon: BarChart3,
+    title: "Credit Score Monitoring",
+    description:
+      "Track your credit score in real-time with daily updates and instant alerts whenever your score changes.",
+    color: "text-brand-blue",
+    bg: "bg-brand-blue-light",
+  },
+  {
+    icon: TrendingUp,
+    title: "Credit Building Tools",
+    description:
+      "Access personalized action plans and smart recommendations designed to help you build credit faster.",
+    color: "text-brand-green",
+    bg: "bg-brand-green-light",
+  },
+  {
+    icon: Shield,
+    title: "3-Bureau Reporting",
+    description:
+      "We report to all three major credit bureaus — Experian, TransUnion, and Equifax — for maximum impact.",
+    color: "text-brand-blue",
+    bg: "bg-brand-blue-light",
+  },
+  {
+    icon: Lock,
+    title: "Identity Protection",
+    description:
+      "24/7 dark web monitoring, fraud alerts, and $1M identity theft insurance to keep you fully protected.",
+    color: "text-brand-green",
+    bg: "bg-brand-green-light",
+  },
+];
 
+const plans = [
+  {
+    name: "Starter",
+    price: "$1",
+    period: "14-day trial",
+    description: "Perfect for getting started on your credit journey",
+    features: [
+      "Credit score monitoring",
+      "1-bureau reporting",
+      "Basic credit tools",
+      "Email support",
+    ],
+    cta: "Start Free Trial",
+    highlight: false,
+  },
+  {
+    name: "Standard",
+    price: "$19.99",
+    period: "per month",
+    description: "Everything you need to build credit confidently",
+    features: [
+      "Daily score monitoring",
+      "3-bureau reporting",
+      "Credit building tools",
+      "Identity alerts",
+      "Priority support",
+    ],
+    cta: "Get Started",
+    highlight: true,
+    badge: "Most Popular",
+  },
+  {
+    name: "Premium",
+    price: "$29.99",
+    period: "per month",
+    description: "Complete protection and accelerated credit growth",
+    features: [
+      "Real-time monitoring",
+      "3-bureau reporting",
+      "Advanced credit tools",
+      "$1M ID theft insurance",
+      "Dedicated advisor",
+      "Credit dispute assistance",
+    ],
+    cta: "Go Premium",
+    highlight: false,
+  },
+];
+
+const testimonials = [
+  {
+    name: "Marcus Johnson",
+    location: "Atlanta, GA",
+    score: "+87 points",
+    text: "I went from a 580 to a 667 in just 8 months using Credit Builder IQ. Their step-by-step guidance made the whole process simple. I finally got approved for my first car loan!",
+    avatar: "MJ",
+  },
+  {
+    name: "Priya Sharma",
+    location: "Dallas, TX",
+    score: "+112 points",
+    text: "The 3-bureau reporting feature is incredible. My score jumped over 100 points in less than a year. I used the improvement to refinance my mortgage and save $300/month.",
+    avatar: "PS",
+  },
+  {
+    name: "Derek Owens",
+    location: "Chicago, IL",
+    score: "+64 points",
+    text: "After a rough financial period, I needed to rebuild fast. Credit Builder IQ gave me a clear roadmap. The identity protection feature caught suspicious activity before it became a real problem.",
+    avatar: "DO",
+  },
+];
+
+function CTAButton({
+  children,
+  className = "",
+  ocid,
+  variant = "primary",
+}: {
+  children: React.ReactNode;
+  className?: string;
+  ocid: string;
+  variant?: "primary" | "secondary" | "outline";
+}) {
+  const base =
+    "inline-flex items-center gap-2 font-semibold transition-all duration-200 cursor-pointer";
+  const variants = {
+    primary:
+      "bg-brand-green hover:bg-brand-green-dark text-white shadow-cta rounded-full px-8 py-3 text-base",
+    secondary:
+      "bg-brand-blue hover:bg-brand-blue-dark text-white rounded-full px-8 py-3 text-base",
+    outline:
+      "border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white rounded-full px-8 py-3 text-base",
+  };
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
-        <div className="flex items-center">
-          <img
-            src="/assets/uploads/images-1.png"
-            alt="Nutrisystem"
-            className="h-10 w-auto object-contain"
-          />
-        </div>
-
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          {["How It Works", "Benefits", "Reviews", "FAQ"].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-              data-ocid={`nav.${item.toLowerCase().replace(/\s+/g, "-")}.link`}
-              className="text-sm font-semibold text-gray-600 hover:text-[#2F8F57] transition-colors"
-            >
-              {item}
-            </a>
-          ))}
-        </nav>
-
-        <div className="hidden md:block">
-          <Button
-            data-ocid="header.get_started.button"
-            className="bg-[#2F8F57] hover:bg-[#267a4a] text-white font-bold px-6 py-2 rounded-full text-sm"
-            onClick={() => window.open(AFFILIATE_URL, "_blank")}
-          >
-            Get Started Today
-          </Button>
-        </div>
-
-        {/* Mobile menu toggle */}
-        <button
-          type="button"
-          className="md:hidden p-2 text-gray-600"
-          onClick={() => setMenuOpen(!menuOpen)}
-          data-ocid="nav.mobile_menu.toggle"
-          aria-label="Toggle menu"
-        >
-          {menuOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
-      </div>
-
-      {/* Mobile menu */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="md:hidden bg-white border-t border-gray-100 overflow-hidden"
-          >
-            <div className="flex flex-col px-4 py-4 gap-4">
-              {["How It Works", "Benefits", "Reviews", "FAQ"].map((item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-                  className="text-sm font-semibold text-gray-700 hover:text-[#2F8F57]"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {item}
-                </a>
-              ))}
-              <Button
-                className="bg-[#2F8F57] hover:bg-[#267a4a] text-white font-bold rounded-full w-full"
-                onClick={() => {
-                  window.open(AFFILIATE_URL, "_blank");
-                  setMenuOpen(false);
-                }}
-              >
-                Get Started Today
-              </Button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
-  );
-}
-
-function Hero() {
-  return (
-    <section className="bg-white py-16 md:py-24" id="how-it-works">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Left: Logo + meal image */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex flex-col items-center gap-6"
-          >
-            <img
-              src="/assets/uploads/images-1.png"
-              alt="Nutrisystem"
-              className="w-72 object-contain"
-            />
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <img
-                src="/assets/generated/nutrisystem-hero-meal.dim_600x500.jpg"
-                alt="Healthy Nutrisystem Meal"
-                className="w-full h-auto object-cover"
-              />
-              <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 shadow-lg">
-                <p className="text-xs font-semibold text-[#2F8F57]">
-                  ✨ Real meals. Real results.
-                </p>
-                <p className="text-xs text-gray-500">
-                  Over 150+ chef-crafted menu items
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Right: Headline + CTA */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="flex flex-col gap-6"
-          >
-            <div className="inline-flex items-center gap-2 bg-green-50 text-[#2F8F57] text-xs font-bold px-4 py-2 rounded-full w-fit">
-              🏆 #1 Doctor-Recommended Weight Loss Program
-            </div>
-            <h1 className="text-4xl md:text-5xl font-extrabold text-[#111111] leading-tight">
-              Lose Up to <span className="text-[#2F8F57]">13 lbs</span> in Your
-              First Month*
-            </h1>
-            <p className="text-lg text-[#4B4F55] leading-relaxed">
-              Get delicious meals delivered right to your door with
-              Nutrisystem's proven weight-loss program. No counting calories —
-              just eat, enjoy, and lose weight with expert guidance every step
-              of the way.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button
-                data-ocid="hero.start_journey.button"
-                size="lg"
-                className="bg-[#2F8F57] hover:bg-[#267a4a] text-white font-extrabold px-8 py-6 rounded-full text-base shadow-lg hover:shadow-xl transition-all"
-                onClick={() => window.open(AFFILIATE_URL, "_blank")}
-              >
-                START MY WEIGHT LOSS JOURNEY →
-              </Button>
-            </div>
-            <div className="flex items-center gap-6 pt-2">
-              <div className="text-center">
-                <p className="text-2xl font-extrabold text-[#2F8F57]">50%</p>
-                <p className="text-xs text-[#7A8088]">Off Today</p>
-              </div>
-              <div className="w-px h-10 bg-gray-200" />
-              <div className="text-center">
-                <p className="text-2xl font-extrabold text-[#2F8F57]">1M+</p>
-                <p className="text-xs text-[#7A8088]">Success Stories</p>
-              </div>
-              <div className="w-px h-10 bg-gray-200" />
-              <div className="text-center">
-                <p className="text-2xl font-extrabold text-[#2F8F57]">50yr</p>
-                <p className="text-xs text-[#7A8088]">of Science</p>
-              </div>
-            </div>
-            <p className="text-xs text-[#7A8088]">
-              *Results not typical. Individual results may vary.
-            </p>
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function WhyItWorks() {
-  const features = [
-    {
-      icon: "🍽️",
-      title: "Chef-Crafted Meals",
-      desc: "Over 150+ delicious, portion-controlled meals designed by culinary experts and nutritionists so you never feel deprived.",
-    },
-    {
-      icon: "⏱️",
-      title: "No Meal Prep Needed",
-      desc: "Save hours every week. Your meals arrive ready to heat and eat — perfect for busy families and professionals.",
-    },
-    {
-      icon: "🚚",
-      title: "Free Delivery",
-      desc: "Everything ships free right to your door. No grocery trips, no meal planning stress — just open, heat, and eat.",
-    },
-  ];
-
-  return (
-    <section id="how-it-works" className="py-16 md:py-24 bg-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-14"
-        >
-          <p className="text-xs font-bold text-[#2F8F57] uppercase tracking-widest mb-3">
-            The Science Behind It
-          </p>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-[#111111] uppercase tracking-tight">
-            WHY NUTRISYSTEM WORKS
-          </h2>
-        </motion.div>
-        <div className="grid md:grid-cols-3 gap-8">
-          {features.map((f, i) => (
-            <motion.div
-              key={f.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-            >
-              <Card className="text-center border border-gray-100 shadow-sm hover:shadow-md transition-shadow rounded-2xl p-2">
-                <CardContent className="pt-8 pb-6 px-6">
-                  <div className="text-5xl mb-5">{f.icon}</div>
-                  <h3 className="text-lg font-extrabold text-[#111111] mb-3">
-                    {f.title}
-                  </h3>
-                  <p className="text-sm text-[#4B4F55] leading-relaxed">
-                    {f.desc}
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function FoodStrip() {
-  return (
-    <div className="w-full overflow-hidden" style={{ maxHeight: 320 }}>
-      <img
-        src="/assets/generated/nutrisystem-food-strip.dim_1200x400.jpg"
-        alt="Nutrisystem meal variety"
-        className="w-full object-cover"
-        style={{ height: 320 }}
-      />
-    </div>
-  );
-}
-
-function MillionBanner() {
-  return (
-    <section className="bg-[#2F8F57] py-10">
-      <div className="max-w-4xl mx-auto px-4 text-center">
-        <motion.p
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-white font-extrabold text-2xl md:text-3xl leading-snug"
-        >
-          Join Over{" "}
-          <span className="underline decoration-white/50">
-            1 MILLION People
-          </span>{" "}
-          Who Lost Weight With Nutrisystem
-        </motion.p>
-      </div>
-    </section>
-  );
-}
-
-function Testimonials() {
-  const reviews = [
-    {
-      name: "Sarah M.",
-      text: "I lost 22 lbs in 2 months! The meals actually taste amazing and I never felt hungry. This is the only diet plan that's ever worked for me.",
-      stars: 5,
-    },
-    {
-      name: "James R.",
-      text: "Lost 35 lbs over 4 months. The convenience is unbeatable — everything delivered to my door and I just had to follow the plan. 10/10 recommend!",
-      stars: 5,
-      featured: true,
-    },
-    {
-      name: "Lisa T.",
-      text: "After trying countless programs, Nutrisystem finally worked for me. Down 18 lbs and feeling healthier than I have in years!",
-      stars: 5,
-    },
-  ];
-
-  return (
-    <section id="reviews" className="py-16 md:py-24 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-14"
-        >
-          <p className="text-xs font-bold text-[#2F8F57] uppercase tracking-widest mb-3">
-            Verified Reviews
-          </p>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-[#111111] uppercase tracking-tight">
-            REAL RESULTS, REAL PEOPLE
-          </h2>
-        </motion.div>
-        <div className="grid md:grid-cols-3 gap-6">
-          {reviews.map((r, i) => (
-            <motion.div
-              key={r.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              data-ocid={`reviews.item.${i + 1}`}
-            >
-              <Card
-                className={`h-full rounded-2xl ${
-                  r.featured
-                    ? "border-2 border-[#2F8F57] shadow-xl"
-                    : "border border-gray-200 shadow-sm"
-                }`}
-              >
-                <CardContent className="p-6">
-                  {r.featured && (
-                    <div className="bg-[#2F8F57] text-white text-xs font-bold px-3 py-1 rounded-full mb-4 w-fit">
-                      ⭐ Most Helpful Review
-                    </div>
-                  )}
-                  <div className="flex mb-3">
-                    {Array.from({ length: r.stars }).map((_, j) => (
-                      <Star
-                        key={`star-${r.name}-${j}`}
-                        className="w-4 h-4 fill-yellow-400 text-yellow-400"
-                      />
-                    ))}
-                  </div>
-                  <p className="text-[#4B4F55] text-sm leading-relaxed mb-4">
-                    &ldquo;{r.text}&rdquo;
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-[#2F8F57]/10 flex items-center justify-center">
-                      <span className="text-[#2F8F57] font-bold text-sm">
-                        {r.name[0]}
-                      </span>
-                    </div>
-                    <p className="font-bold text-sm text-[#111111]">{r.name}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Benefits() {
-  const items = [
-    "Portion-controlled meals designed by nutritionists",
-    "150+ delicious menu items to choose from",
-    "No calorie counting or carb tracking required",
-    "Personalized meal plans for your goals",
-    "24/7 support from weight loss coaches",
-    "Clinically proven to help you lose weight",
-  ];
-
-  return (
-    <section id="benefits" className="py-16 md:py-24 bg-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-14"
-        >
-          <p className="text-xs font-bold text-[#2F8F57] uppercase tracking-widest mb-3">
-            Everything You Get
-          </p>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-[#111111] uppercase tracking-tight">
-            BENEFITS AT A GLANCE
-          </h2>
-        </motion.div>
-        <div className="grid sm:grid-cols-2 gap-4">
-          {items.map((item, i) => (
-            <motion.div
-              key={item}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.07 }}
-              className="flex items-start gap-3 p-4 rounded-xl bg-green-50 border border-green-100"
-              data-ocid={`benefits.item.${i + 1}`}
-            >
-              <div className="w-6 h-6 rounded-full bg-[#2F8F57] flex-shrink-0 flex items-center justify-center mt-0.5">
-                <Check className="w-3.5 h-3.5 text-white" strokeWidth={3} />
-              </div>
-              <p className="text-sm font-semibold text-[#111111]">{item}</p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Plans() {
-  const plans = [
-    {
-      name: "Basic",
-      price: "$9.99",
-      unit: "/day",
-      desc: "Essential weight loss meals",
-      features: [
-        "Breakfast, lunch & dinner",
-        "80+ menu items",
-        "Free shipping",
-        "Basic support",
-      ],
-      featured: false,
-    },
-    {
-      name: "Core",
-      price: "$12.74",
-      unit: "/day",
-      desc: "Most popular program",
-      features: [
-        "All Basic features",
-        "130+ menu items",
-        "Free NutriShakes",
-        "Priority support",
-        "Flex meals included",
-      ],
-      featured: true,
-    },
-    {
-      name: "Uniquely Yours",
-      price: "$14.29",
-      unit: "/day",
-      desc: "Maximum flexibility & results",
-      features: [
-        "All Core features",
-        "160+ menu items",
-        "Fresh frozen meals",
-        "Dedicated coach",
-        "Custom meal plans",
-      ],
-      featured: false,
-    },
-  ];
-
-  return (
-    <section className="py-16 md:py-24 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-14"
-        >
-          <p className="text-xs font-bold text-[#2F8F57] uppercase tracking-widest mb-3">
-            Choose Your Plan
-          </p>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-[#111111] uppercase tracking-tight">
-            FIND YOUR PERFECT PLAN
-          </h2>
-          <p className="mt-4 text-[#4B4F55]">
-            All plans include free shipping and a 14-day money-back guarantee
-          </p>
-        </motion.div>
-        <div className="grid md:grid-cols-3 gap-6">
-          {plans.map((plan, i) => (
-            <motion.div
-              key={plan.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              data-ocid={`plans.item.${i + 1}`}
-            >
-              <Card
-                className={`relative h-full rounded-2xl overflow-hidden ${
-                  plan.featured
-                    ? "border-2 border-[#2F8F57] shadow-2xl"
-                    : "border border-gray-200 shadow-sm"
-                }`}
-              >
-                {plan.featured && (
-                  <div className="bg-[#2F8F57] text-white text-xs font-extrabold text-center py-2 uppercase tracking-widest">
-                    🔥 Most Popular — Save 50%
-                  </div>
-                )}
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-extrabold text-[#111111] mb-1">
-                    {plan.name}
-                  </h3>
-                  <p className="text-xs text-[#7A8088] mb-4">{plan.desc}</p>
-                  <div className="flex items-end gap-1 mb-6">
-                    <span className="text-4xl font-extrabold text-[#2F8F57]">
-                      {plan.price}
-                    </span>
-                    <span className="text-sm text-[#7A8088] mb-1">
-                      {plan.unit}
-                    </span>
-                  </div>
-                  <ul className="space-y-3 mb-8">
-                    {plan.features.map((f) => (
-                      <li
-                        key={f}
-                        className="flex items-center gap-2 text-sm text-[#4B4F55]"
-                      >
-                        <Check
-                          className="w-4 h-4 text-[#2F8F57] flex-shrink-0"
-                          strokeWidth={2.5}
-                        />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <Button
-                    data-ocid={`plans.item.${i + 1}.button`}
-                    className={`w-full rounded-full font-bold py-5 ${
-                      plan.featured
-                        ? "bg-[#2F8F57] hover:bg-[#267a4a] text-white shadow-lg"
-                        : "bg-white border-2 border-[#2F8F57] text-[#2F8F57] hover:bg-green-50"
-                    }`}
-                    onClick={() => window.open(AFFILIATE_URL, "_blank")}
-                  >
-                    Choose {plan.name}
-                  </Button>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-        <div className="text-center mt-10">
-          <Button
-            data-ocid="plans.view_all.button"
-            size="lg"
-            className="bg-[#2F8F57] hover:bg-[#267a4a] text-white font-extrabold px-10 py-6 rounded-full text-base shadow-lg"
-            onClick={() => window.open(AFFILIATE_URL, "_blank")}
-          >
-            VIEW ALL PLANS & SAVE 50% →
-          </Button>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function FAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const questions = [
-    {
-      q: "How does Nutrisystem work?",
-      a: "Nutrisystem delivers pre-planned, portion-controlled meals directly to your door. You follow the meal plan and add in fresh grocery items called PowerFuels and SmartCarbs. The program is designed to keep you in a caloric deficit while feeling full and satisfied.",
-    },
-    {
-      q: "How much weight can I expect to lose?",
-      a: "On average, Nutrisystem members lose up to 13 lbs and 7 inches in the first month. Individual results vary based on starting weight and how closely you follow the program. Most people continue to lose 1-2 lbs per week after the first month.",
-    },
-    {
-      q: "Are the meals healthy and nutritious?",
-      a: "Yes! All Nutrisystem meals are developed by registered dietitians and are high in protein, fiber, and essential nutrients. Each meal is designed to keep you satisfied while maintaining the caloric deficit needed for weight loss.",
-    },
-    {
-      q: "Can I pause or cancel my subscription?",
-      a: "Absolutely. Nutrisystem offers flexible subscription options. You can pause, modify, or cancel your plan at any time. There's also a 14-day money-back guarantee so you can try the program risk-free.",
-    },
-    {
-      q: "Is Nutrisystem suitable for vegetarians or those with dietary restrictions?",
-      a: "Yes! Nutrisystem offers vegetarian-friendly meal plans and can accommodate many dietary preferences. They offer a wide variety of meals and you can filter by your food preferences and dietary needs when building your menu.",
-    },
-  ];
-
-  return (
-    <section id="faq" className="py-16 md:py-24 bg-white">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-14"
-        >
-          <p className="text-xs font-bold text-[#2F8F57] uppercase tracking-widest mb-3">
-            Got Questions?
-          </p>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-[#111111] uppercase tracking-tight">
-            FREQUENTLY ASKED QUESTIONS
-          </h2>
-        </motion.div>
-        <div className="space-y-3">
-          {questions.map((item, i) => (
-            <motion.div
-              key={item.q}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.07 }}
-              className="border border-gray-200 rounded-xl overflow-hidden"
-              data-ocid={`faq.item.${i + 1}`}
-            >
-              <button
-                type="button"
-                className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-gray-50 transition-colors"
-                onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                data-ocid={`faq.item.${i + 1}.toggle`}
-              >
-                <span className="font-semibold text-[#111111] pr-4">
-                  {item.q}
-                </span>
-                <ChevronDown
-                  className={`w-5 h-5 text-[#2F8F57] flex-shrink-0 transition-transform ${
-                    openIndex === i ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-              <AnimatePresence>
-                {openIndex === i && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.25 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="px-6 pb-5 text-sm text-[#4B4F55] leading-relaxed border-t border-gray-100 pt-4">
-                      {item.a}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function BottomCTA() {
-  return (
-    <section className="bg-[#2B2B2B] py-16 md:py-20">
-      <div className="max-w-3xl mx-auto px-4 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4 leading-tight">
-            Ready to Start Your Weight Loss Journey?
-          </h2>
-          <p className="text-2xl font-extrabold text-[#2F8F57] mb-8">
-            🎉 Get 50% Off + Free Shipping Today!
-          </p>
-          <Button
-            data-ocid="bottom_cta.start.button"
-            size="lg"
-            className="bg-[#2F8F57] hover:bg-[#267a4a] text-white font-extrabold px-12 py-7 rounded-full text-lg shadow-2xl hover:shadow-green-900/30 transition-all"
-            onClick={() => window.open(AFFILIATE_URL, "_blank")}
-          >
-            CLAIM MY 50% DISCOUNT NOW →
-          </Button>
-          <p className="text-gray-400 text-sm mt-6">
-            No commitment required. Cancel anytime. 14-day money-back guarantee.
-          </p>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-function Footer() {
-  const year = new Date().getFullYear();
-  const hostname = encodeURIComponent(
-    typeof window !== "undefined" ? window.location.hostname : "",
-  );
-
-  return (
-    <footer className="bg-[#2B2B2B] border-t border-white/10 py-10">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div>
-            <img
-              src="/assets/uploads/images-1.png"
-              alt="Nutrisystem"
-              className="h-10 w-auto object-contain brightness-0 invert mb-3"
-            />
-            <p className="text-xs text-gray-400 max-w-sm leading-relaxed">
-              * This is an affiliate link. I may earn a commission if you
-              purchase through my link at no extra cost to you. Results may
-              vary.
-            </p>
-          </div>
-          <div className="flex flex-col gap-3">
-            <div className="flex flex-wrap gap-4">
-              {["How It Works", "Benefits", "Reviews", "FAQ"].map((link) => (
-                <a
-                  key={link}
-                  href={`#${link.toLowerCase().replace(/\s+/g, "-")}`}
-                  className="text-xs text-gray-400 hover:text-white transition-colors"
-                  data-ocid={`footer.${link.toLowerCase().replace(/\s+/g, "-")}.link`}
-                >
-                  {link}
-                </a>
-              ))}
-            </div>
-            <p className="text-xs text-gray-500">
-              © {year}.{" "}
-              <a
-                href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${hostname}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-gray-300 transition-colors"
-              >
-                Built with love using caffeine.ai
-              </a>
-            </p>
-          </div>
-        </div>
-      </div>
-    </footer>
+    <a
+      href={AFFILIATE_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-ocid={ocid}
+      className={`${base} ${variants[variant]} ${className}`}
+    >
+      {children}
+    </a>
   );
 }
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-white font-sans">
-      <Header />
-      <main>
-        <Hero />
-        <WhyItWorks />
-        <FoodStrip />
-        <MillionBanner />
-        <Testimonials />
-        <Benefits />
-        <Plans />
-        <FAQ />
-        <BottomCTA />
-      </main>
-      <Footer />
+    <div className="min-h-screen bg-white font-body">
+      {/* Sticky Header */}
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border shadow-sm">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-brand-blue flex items-center justify-center">
+              <CreditCard className="w-4 h-4 text-white" />
+            </div>
+            <span className="font-display font-bold text-lg text-foreground">
+              Credit Builder IQ
+            </span>
+          </div>
+          <nav className="hidden md:flex items-center gap-6 text-sm text-muted-foreground">
+            <a
+              href="#features"
+              className="hover:text-foreground transition-colors"
+              data-ocid="nav.features.link"
+            >
+              Features
+            </a>
+            <a
+              href="#pricing"
+              className="hover:text-foreground transition-colors"
+              data-ocid="nav.pricing.link"
+            >
+              Pricing
+            </a>
+            <a
+              href="#testimonials"
+              className="hover:text-foreground transition-colors"
+              data-ocid="nav.testimonials.link"
+            >
+              Reviews
+            </a>
+          </nav>
+          <CTAButton
+            ocid="header.get_started.button"
+            variant="primary"
+            className="text-sm px-5 py-2"
+          >
+            Get Started <ChevronRight className="w-4 h-4" />
+          </CTAButton>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="bg-white pt-16 pb-20 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <Badge className="mb-4 bg-brand-blue-light text-brand-blue border-0 font-semibold px-3 py-1">
+                #1 Credit Building Platform
+              </Badge>
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
+                Build Your Credit.{" "}
+                <span className="text-brand-green">Unlock Your Future.</span>
+              </h1>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-lg">
+                Monitor your credit score daily, get personalized improvement
+                tips, and report to all 3 major bureaus. Join over 500,000
+                members who improved their scores.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <CTAButton
+                  ocid="hero.start_trial.button"
+                  variant="primary"
+                  className="text-base px-8 py-4"
+                >
+                  Start $1 Trial Today <ChevronRight className="w-5 h-5" />
+                </CTAButton>
+                <CTAButton
+                  ocid="hero.learn_more.button"
+                  variant="outline"
+                  className="text-base px-8 py-4"
+                >
+                  See How It Works
+                </CTAButton>
+              </div>
+              <div className="mt-8 flex items-center gap-6">
+                <div className="flex -space-x-2">
+                  {[
+                    "bg-brand-blue",
+                    "bg-brand-green",
+                    "bg-brand-blue-dark",
+                  ].map((c) => (
+                    <div
+                      key={c}
+                      className={`w-8 h-8 rounded-full ${c} border-2 border-white`}
+                    />
+                  ))}
+                </div>
+                <div>
+                  <div className="flex items-center gap-1">
+                    {[1, 2, 3, 4, 5].map((s) => (
+                      <Star
+                        key={s}
+                        className="w-4 h-4 fill-yellow-400 text-yellow-400"
+                      />
+                    ))}
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    4.9/5 from 12,000+ reviews
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="relative"
+            >
+              <div className="relative rounded-2xl overflow-hidden shadow-feature">
+                <img
+                  src="/assets/generated/credit-score-hero.dim_600x400.png"
+                  alt="Credit score dashboard showing score improvement"
+                  className="w-full h-auto object-cover"
+                />
+                <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-card">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wide">
+                        Your Credit Score
+                      </p>
+                      <p className="text-3xl font-bold text-brand-green">742</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-xs text-muted-foreground">
+                        This month
+                      </p>
+                      <p className="text-lg font-bold text-brand-green">
+                        ↑ +23 pts
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mt-2 h-2 bg-muted rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-brand-blue to-brand-green rounded-full"
+                      style={{ width: "74%" }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Trust Bar */}
+      <section className="bg-muted border-y border-border py-8 px-4 sm:px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            {[
+              { value: "500K+", label: "Members" },
+              { value: "87 pts", label: "Avg Score Increase" },
+              { value: "3", label: "Bureaus Reported" },
+              { value: "$1M", label: "ID Theft Insurance" },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <p className="text-2xl font-bold text-brand-blue font-display">
+                  {stat.value}
+                </p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  {stat.label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="bg-white py-20 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-14"
+          >
+            <Badge className="mb-4 bg-brand-green-light text-brand-green border-0 font-semibold">
+              Everything You Need
+            </Badge>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
+              Your Complete Credit Toolkit
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              All the tools and monitoring you need to build, protect, and grow
+              your credit score — in one platform.
+            </p>
+          </motion.div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {features.map((feature, i) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+              >
+                <Card className="h-full border border-border shadow-card hover:shadow-feature transition-shadow duration-300">
+                  <CardHeader className="pb-3">
+                    <div
+                      className={`w-11 h-11 rounded-xl ${feature.bg} flex items-center justify-center mb-3`}
+                    >
+                      <feature.icon className={`w-5 h-5 ${feature.color}`} />
+                    </div>
+                    <CardTitle className="text-base font-semibold text-foreground">
+                      {feature.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {feature.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="bg-muted py-20 px-4 sm:px-6">
+        <div className="max-w-5xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-14"
+          >
+            <Badge className="mb-4 bg-brand-blue-light text-brand-blue border-0 font-semibold">
+              Simple Pricing
+            </Badge>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
+              Choose Your Plan
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-xl mx-auto">
+              Start with a risk-free $1 trial. Cancel anytime, no long-term
+              commitment.
+            </p>
+          </motion.div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {plans.map((plan, i) => (
+              <motion.div
+                key={plan.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+                data-ocid={`pricing.plan.${i + 1}`}
+              >
+                <Card
+                  className={`h-full flex flex-col relative ${
+                    plan.highlight
+                      ? "border-2 border-brand-blue shadow-feature"
+                      : "border border-border shadow-card"
+                  } bg-white`}
+                >
+                  {plan.badge && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                      <Badge className="bg-brand-blue text-white border-0 px-4 font-semibold">
+                        {plan.badge}
+                      </Badge>
+                    </div>
+                  )}
+                  <CardHeader className="pt-8 pb-4">
+                    <CardTitle className="text-xl font-bold text-foreground">
+                      {plan.name}
+                    </CardTitle>
+                    <div className="mt-2">
+                      <span className="text-4xl font-bold text-brand-blue font-display">
+                        {plan.price}
+                      </span>
+                      <span className="text-muted-foreground ml-2 text-sm">
+                        {plan.period}
+                      </span>
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-2">
+                      {plan.description}
+                    </p>
+                  </CardHeader>
+                  <CardContent className="flex-1 flex flex-col">
+                    <ul className="space-y-3 mb-8 flex-1">
+                      {plan.features.map((f) => (
+                        <li key={f} className="flex items-center gap-3 text-sm">
+                          <CheckCircle2 className="w-4 h-4 text-brand-green flex-shrink-0" />
+                          <span className="text-foreground">{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <CTAButton
+                      ocid={`pricing.plan_${i + 1}.button`}
+                      variant={plan.highlight ? "primary" : "outline"}
+                      className="w-full justify-center"
+                    >
+                      {plan.cta} <ChevronRight className="w-4 h-4" />
+                    </CTAButton>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section id="testimonials" className="bg-white py-20 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-14"
+          >
+            <Badge className="mb-4 bg-brand-green-light text-brand-green border-0 font-semibold">
+              Real Results
+            </Badge>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
+              Members Who Transformed Their Credit
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Thousands of people have rebuilt and boosted their credit scores
+              using Credit Builder IQ.
+            </p>
+          </motion.div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {testimonials.map((t, i) => (
+              <motion.div
+                key={t.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+                data-ocid={`testimonials.item.${i + 1}`}
+              >
+                <Card className="h-full border border-border shadow-card bg-white">
+                  <CardContent className="pt-6">
+                    <div className="flex items-center gap-1 mb-4">
+                      {[1, 2, 3, 4, 5].map((s) => (
+                        <Star
+                          key={s}
+                          className="w-4 h-4 fill-yellow-400 text-yellow-400"
+                        />
+                      ))}
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-6 italic">
+                      &ldquo;{t.text}&rdquo;
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-brand-blue flex items-center justify-center">
+                          <span className="text-white text-xs font-bold">
+                            {t.avatar}
+                          </span>
+                        </div>
+                        <div>
+                          <p className="font-semibold text-sm text-foreground">
+                            {t.name}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {t.location}
+                          </p>
+                        </div>
+                      </div>
+                      <Badge className="bg-brand-green-light text-brand-green border-0 font-bold text-sm">
+                        {t.score}
+                      </Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Banner */}
+      <section className="bg-gradient-to-r from-brand-blue to-brand-green py-20 px-4 sm:px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="max-w-3xl mx-auto text-center"
+        >
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mb-4">
+            Start Building Better Credit Today
+          </h2>
+          <p className="text-lg text-white/85 mb-8">
+            Join 500,000+ members improving their credit scores. Start with just
+            $1 — cancel anytime.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href={AFFILIATE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-ocid="cta_banner.start_button"
+              className="inline-flex items-center justify-center gap-2 bg-white text-brand-blue font-bold rounded-full px-10 py-4 text-base hover:bg-brand-blue-light transition-colors shadow-cta"
+            >
+              Get Started for $1 <ChevronRight className="w-5 h-5" />
+            </a>
+          </div>
+          <p className="mt-4 text-white/70 text-sm">
+            No long-term contract. Cancel anytime.
+          </p>
+        </motion.div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-foreground py-12 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 mb-8">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-7 h-7 rounded-lg bg-brand-blue flex items-center justify-center">
+                  <CreditCard className="w-4 h-4 text-white" />
+                </div>
+                <span className="font-display font-bold text-white">
+                  Credit Builder IQ
+                </span>
+              </div>
+              <p className="text-sm text-white/60 leading-relaxed">
+                Helping Americans build better credit scores and unlock
+                financial freedom since 2019.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wide">
+                Quick Links
+              </h4>
+              <ul className="space-y-2">
+                {["Features", "Pricing", "Reviews", "FAQs"].map((link) => (
+                  <li key={link}>
+                    <a
+                      href={AFFILIATE_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/60 hover:text-white text-sm transition-colors"
+                    >
+                      {link}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wide">
+                Legal
+              </h4>
+              <ul className="space-y-2">
+                {["Privacy Policy", "Terms of Service", "Disclaimer"].map(
+                  (link) => (
+                    <li key={link}>
+                      <a
+                        href={AFFILIATE_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-white/60 hover:text-white text-sm transition-colors"
+                      >
+                        {link}
+                      </a>
+                    </li>
+                  ),
+                )}
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-white/10 pt-8">
+            <p className="text-xs text-white/40 leading-relaxed mb-4">
+              <strong className="text-white/60">Disclaimer:</strong> This
+              website contains affiliate links. We may receive compensation when
+              you click on links and make a purchase. Results vary by
+              individual. Credit scores are affected by many factors and
+              improvement is not guaranteed. The score improvement amounts shown
+              are examples from actual members and are not typical results.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <p className="text-xs text-white/40">
+                © {new Date().getFullYear()}. Built with love using{" "}
+                <a
+                  href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white/60 underline"
+                >
+                  caffeine.ai
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

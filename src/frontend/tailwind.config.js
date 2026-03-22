@@ -1,11 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ['class'],
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Plus Jakarta Sans', 'sans-serif'],
+        display: ['Playfair Display', 'Georgia', 'serif'],
+        body: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
       },
       colors: {
         background: 'oklch(var(--background) / <alpha-value>)',
@@ -13,10 +14,6 @@ export default {
         card: {
           DEFAULT: 'oklch(var(--card) / <alpha-value>)',
           foreground: 'oklch(var(--card-foreground) / <alpha-value>)',
-        },
-        popover: {
-          DEFAULT: 'oklch(var(--popover) / <alpha-value>)',
-          foreground: 'oklch(var(--popover-foreground) / <alpha-value>)',
         },
         primary: {
           DEFAULT: 'oklch(var(--primary) / <alpha-value>)',
@@ -41,11 +38,24 @@ export default {
         border: 'oklch(var(--border) / <alpha-value>)',
         input: 'oklch(var(--input) / <alpha-value>)',
         ring: 'oklch(var(--ring) / <alpha-value>)',
+        brand: {
+          blue: 'oklch(0.42 0.18 255)',
+          'blue-dark': 'oklch(0.32 0.18 255)',
+          'blue-light': 'oklch(0.92 0.05 255)',
+          green: 'oklch(0.52 0.16 155)',
+          'green-dark': 'oklch(0.42 0.16 155)',
+          'green-light': 'oklch(0.92 0.06 155)',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+      },
+      boxShadow: {
+        card: '0 2px 16px oklch(0.42 0.18 255 / 0.08)',
+        feature: '0 4px 32px oklch(0.42 0.18 255 / 0.12)',
+        cta: '0 8px 32px oklch(0.52 0.16 155 / 0.3)',
       },
     },
   },
