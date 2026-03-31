@@ -1,28 +1,43 @@
-# Credit Builder IQ Affiliate Landing Page
+# Nutrisystem Affiliate Landing Page
 
 ## Current State
-Existing project with prior affiliate landing pages (Nutrisystem, Unlocator, IdentityIQ).
+The app currently contains a CreditBuilderIQ credit score affiliate landing page in App.tsx. It includes a sticky header, hero section, trust bar, features, pricing, testimonials, CTA banner, and footer — all linked to the CreditBuilderIQ affiliate URL.
+
+The new uploaded Nutrisystem logo is available at: `/assets/images-019d42c8-6d97-708e-a058-297c6fd6e5db.png`
 
 ## Requested Changes (Diff)
 
 ### Add
-- New credit builder / credit score affiliate landing page
-- Affiliate URL: https://www.creditbuilderiq.com/lander/aff-4?offercode=4375029E&plancode=PLANCB4D&transactionid=4bcf4e6a15904846971feafae6ae6788&offer_id=874&aff_id=1331&aff_sub=%7Baffiliate%2Fpublisher_id_here%7D&fname=&lname=&email=&address=&city=&state=&zip=&phone=&source=%7Btraffic_type_here%7D&aff_sub2=%7BadditionalsubID_here%7D&aff_sub3=%7Badditional_subID_here%7D&aff_click_id=%7BclickID_here%7D&utm_campaign=%7Baffiliate%2Fpublisher_id_here%7D&utm_source=1331&utm_medium=affiliate
-- White background design
-- Hero section with headline and CTA
-- Features/benefits section (credit building, score monitoring, reporting)
-- Plan/pricing section
-- Testimonials section
-- All CTAs link to the affiliate URL
+- New Nutrisystem-specific affiliate landing page replacing App.tsx content entirely
+- Sticky header with the Nutrisystem logo image (`/assets/images-019d42c8-6d97-708e-a058-297c6fd6e5db.png`)
+- Hero section with strong weight loss CTA and the Nutrisystem logo prominently displayed
+- Stats/trust bar (e.g. meals delivered, average weight lost, customer count)
+- How It Works section (3-step process: choose plan, get food delivered, lose weight)
+- Plan tiers section with 3 plans (Basic, Uniquely Yours, Uniquely Yours Ultimate)
+- Real food/meal highlights section
+- Testimonials section (3 real-feeling testimonials with weight loss results)
+- Final CTA banner
+- Footer with affiliate disclaimer
 
 ### Modify
-- Replace current landing page content with Credit Builder IQ content
+- AFFILIATE_URL constant → change to: https://www.nutrisystem.com/diet-plans/nutrisystem-program
+- All CTAs throughout the page link to the Nutrisystem affiliate URL
+- Remove all credit score / CreditBuilderIQ-specific content
+- Brand colors should reflect Nutrisystem (green accent from logo leaf, dark gray text on white)
 
 ### Remove
-- Nothing
+- All CreditBuilderIQ branding, copy, features, and plans
+- Credit score dashboard imagery
+- All credit-related icons and content
 
 ## Implementation Plan
-1. Build React frontend with sticky header, hero, benefits, plans, testimonials, footer
-2. All CTA buttons link to the Credit Builder IQ affiliate URL
-3. White background throughout
-4. No custom image provided — use generated visuals or icon-based design
+1. Replace App.tsx entirely with the Nutrisystem landing page
+2. Sticky header: use Nutrisystem logo image in header, white background, nav links, CTA button
+3. Hero: large headline about weight loss/meal delivery, Nutrisystem logo, affiliate CTA buttons
+4. Trust bar: stats like "50+ years of proven results", "millions of customers", "avg 11.6 lbs lost in first month"
+5. How It Works: 3-step cards
+6. Plans: 3 pricing tiers all linking to affiliate URL (Basic, Uniquely Yours, Uniquely Yours Ultimate)
+7. Food highlights: showcase meal variety (use text/icons, no generated images needed)
+8. Testimonials: 3 cards with weight loss results and star ratings
+9. CTA banner + footer with affiliate disclaimer
+10. Validate and deploy
