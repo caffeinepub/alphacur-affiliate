@@ -18,25 +18,27 @@
 
 @layer base {
   :root {
+    /* White background */
     --background: 1 0 0;
-    --foreground: 0.18 0.02 240;
-    --card: 0.99 0.003 135;
-    --card-foreground: 0.18 0.02 240;
+    --foreground: 0.2 0.03 240;
+    --card: 1 0 0;
+    --card-foreground: 0.2 0.03 240;
     --popover: 1 0 0;
-    --popover-foreground: 0.18 0.02 240;
-    --primary: 0.58 0.15 135;
+    --popover-foreground: 0.2 0.03 240;
+    /* Insurance green primary */
+    --primary: 0.55 0.17 148;
     --primary-foreground: 1 0 0;
-    --secondary: 0.44 0.13 135;
+    --secondary: 0.42 0.14 148;
     --secondary-foreground: 1 0 0;
-    --muted: 0.96 0.006 135;
-    --muted-foreground: 0.48 0.02 240;
-    --accent: 0.94 0.05 135;
-    --accent-foreground: 0.3 0.1 135;
+    --muted: 0.97 0.005 148;
+    --muted-foreground: 0.5 0.02 240;
+    --accent: 0.93 0.06 148;
+    --accent-foreground: 0.35 0.12 148;
     --destructive: 0.45 0.22 25;
     --destructive-foreground: 1 0 0;
-    --border: 0.91 0.012 135;
-    --input: 0.91 0.012 135;
-    --ring: 0.58 0.15 135;
+    --border: 0.92 0.01 240;
+    --input: 0.92 0.01 240;
+    --ring: 0.55 0.17 148;
     --radius: 0.625rem;
   }
 
