@@ -5,8 +5,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['Bricolage Grotesque', 'system-ui', 'sans-serif'],
-        body: ['Figtree', 'system-ui', 'sans-serif'],
+        display: ['Playfair Display', 'Georgia', 'serif'],
+        body: ['DM Sans', 'system-ui', 'sans-serif'],
       },
       colors: {
         background: 'oklch(var(--background) / <alpha-value>)',
@@ -39,12 +39,13 @@ export default {
         input: 'oklch(var(--input) / <alpha-value>)',
         ring: 'oklch(var(--ring) / <alpha-value>)',
         brand: {
-          green: 'oklch(0.58 0.15 135)',
-          'green-dark': 'oklch(0.44 0.13 135)',
-          'green-light': 'oklch(0.94 0.05 135)',
-          'green-mid': 'oklch(0.72 0.13 135)',
-          dark: 'oklch(0.18 0.02 240)',
-          gray: 'oklch(0.48 0.02 240)',
+          green: 'oklch(0.52 0.16 148)',
+          'green-dark': 'oklch(0.40 0.14 148)',
+          'green-light': 'oklch(0.95 0.05 148)',
+          'green-mid': 'oklch(0.68 0.13 148)',
+          gold: 'oklch(0.78 0.14 82)',
+          dark: 'oklch(0.14 0.03 148)',
+          gray: 'oklch(0.52 0.02 148)',
         },
       },
       borderRadius: {
@@ -53,9 +54,10 @@ export default {
         sm: 'calc(var(--radius) - 4px)',
       },
       boxShadow: {
-        card: '0 2px 16px oklch(0.58 0.15 135 / 0.08)',
-        feature: '0 4px 32px oklch(0.58 0.15 135 / 0.14)',
-        cta: '0 8px 32px oklch(0.58 0.15 135 / 0.35)',
+        card: '0 2px 16px oklch(0.52 0.16 148 / 0.08)',
+        feature: '0 4px 32px oklch(0.52 0.16 148 / 0.16)',
+        cta: '0 8px 32px oklch(0.52 0.16 148 / 0.35)',
+        header: '0 2px 12px oklch(0.14 0.03 148 / 0.08)',
       },
     },
   },
